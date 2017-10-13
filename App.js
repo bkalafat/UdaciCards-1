@@ -8,6 +8,8 @@ import { TabNavigator } from 'react-navigation'
 import { Entypo } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
+import {clearDB} from './utils/api'
+
 import Decks from './components/Decks'
 import Deck from './components/Deck'
 import AddDeck from './components/AddDeck'
@@ -58,6 +60,9 @@ const Tabs = TabNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount() {
+    //clearDB()
+  }
   render() {
     return (
       <Provider store={createStore(reducer)}>

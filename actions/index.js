@@ -9,17 +9,17 @@ export function loadDecks (decks) {
   }
 }
 
-export function addDeck (deck) {
+export function addDeck(deckTitle) {
   return {
-    type: ADD_ENTRY,
-    deck,
+    type: ADD_DECK,
+    deckTitle,
   }
 }
 
-export function addCard (deck, card) {
+export function addCard(deckTitle, card) {
   return {
-    type: ADD_ENTRY,
-    deck,
+    type: ADD_CARD,
+    deckTitle,
     card
   }
 }

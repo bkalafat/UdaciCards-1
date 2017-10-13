@@ -25,7 +25,6 @@ class Decks extends Component {
   };
 
   _renderItem = ({item}) => {
-    console.log("item ", item)
     return (
       <TouchableOpacity style={styles.item} onPress={() => this._onPressItem(item)}>
         <Deck id={item.title} title={item.title} questions={item.questions} onPressItem={this._onPressItem}/>
@@ -36,7 +35,7 @@ class Decks extends Component {
   render() {
     const {decks} = this.props
     const listOfDecks = Object.values(decks)
-    
+
     if (!this.state.ready) {
       return (<AppLoading/>)
     }
@@ -54,7 +53,7 @@ class Decks extends Component {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: white,
-    marginTop: 17,
+    marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     padding: 20,

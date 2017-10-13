@@ -1,7 +1,7 @@
 import React from 'react';
 import {AsyncStorage} from 'react-native'
 
-const DECKS_STORAGE_KEY = 'com.santhoshn.udacicards.decks'
+const DECKS_STORAGE_KEY = 'santhosh.decks'
 
 function dummyDecks() {
   return {
@@ -30,12 +30,7 @@ function dummyDecks() {
 }
 
 function parseDecks(results) {
-  if (results) {
-    results = JSON.parse(results)
-  }
-  return (results)
-    ? results
-    : dummyDecks()
+  return (results) ? JSON.parse(results) : dummyDecks()
 }
 
 export function getDecks() {
@@ -43,18 +38,23 @@ export function getDecks() {
 }
 
 export function getDeck(id) {
-  return getDecks()[id]
+  return getDecks().then((decks) => (decks[id]))
 }
 
 export function saveDeckTitle(deckTitle) {
-  const results = getDecks()
-  if (!results[deckTitle]) {
-    results[deckTitle] = {
-      title: deckTitle,
-      questions: []
+  getDecks().then((decks) => {
+    if (!decks[deckTitle]) {
+      decks[deckTitle] = {
+        title: deckTitle,
+        questions: []
+      }
+      AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
     }
-    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(results))
-  }
+  })
+}
+
+export function clearDB() {
+  AsyncStorage.setItem(DECKS_STORAGE_KEY, '')
 }
 
 export function addCardToDeck(deckTitle, {question, answer, isCorrect}) {
