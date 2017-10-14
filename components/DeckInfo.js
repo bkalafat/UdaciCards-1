@@ -11,7 +11,7 @@ class DeckInfo extends Component {
   }
 
   render() {
-    const {deck, navigateToAddCard} = this.props
+    const {deck, navigateToAddCard, navigateToStartQuiz} = this.props
 
     return (
       <View style={styles.container}>
@@ -89,7 +89,7 @@ function mapDispatchToProps(dispatch, {navigation}) {
     navigateToAddCard: (deckTitle) => navigation.navigate('AddCard', {
           deckTitle: deckTitle
     }),
-    navigateToStartQuiz: (deckTitle) => navigation.navigate('AddCard', {
+    navigateToStartQuiz: (deckTitle) => navigation.navigate('Quiz', {
           deckTitle: deckTitle
     })
   }

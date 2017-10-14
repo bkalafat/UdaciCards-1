@@ -15,6 +15,7 @@ import Deck from './components/Deck'
 import AddDeck from './components/AddDeck'
 import DeckInfo from './components/DeckInfo'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 
 import {charcoal, white, black} from './utils/colors'
 
@@ -72,7 +73,8 @@ const MainNavigator = StackNavigator({
       headerTintColor: white,
       headerStyle:{
         backgroundColor: black
-      }
+      },
+      headerBackTitle: null,
     }
   },
   AddCard:{
@@ -81,7 +83,20 @@ const MainNavigator = StackNavigator({
       headerTintColor: white,
       headerStyle:{
         backgroundColor: black
-      }
+      },
+      headerBackTitle: null,
+      title: "Add Card"
+    }
+  },
+  Quiz:{
+    screen: Quiz,
+    navigationOptions:{
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: black
+      },
+      headerBackTitle: null,
+      title: "Quiz"
     }
   }
 })
