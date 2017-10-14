@@ -29,15 +29,38 @@ class Quiz extends Component {
     })
   }
 
+  restartQuiz() {
+    this.setState({
+      currentQuestionIndex: 0,
+      correctAnswersCount: 0
+    })
+  }
+
   render() {
     const {currentQuestionIndex, correctAnswersCount} = this.state
-    const {questions} = this.props.deck
+    const {deck, goBack} = this.props
+    const {questions} = deck
 
     if(currentQuestionIndex > 0 && currentQuestionIndex === questions.length) {
       return (
-        <View style={[styles.container, styles.center]}>
-          <Text style={styles.scoreLbl}>Your Score</Text>
-          <Text style={styles.score}>{(correctAnswersCount/questions.length) * 100} %</Text>
+        <View style={styles.container}>
+          <View style={styles.center}>
+            <Text style={styles.scoreLbl}>Your Score</Text>
+            <Text style={styles.score}>{(correctAnswersCount/questions.length) * 100} %</Text>
+          </View>
+
+          <View style={styles.btnContainer}>
+            <TouchableOpacity style={[styles.btn, Platform.OS === 'ios'
+              ? styles.iosBtn
+              : styles.androidBtn, styles.goBackToDeckBtn]} onPress={() => goBack()}>
+              <Text style={[styles.btnText, styles.goBackToDeckBtnText]}>Back to Deck</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.btn, Platform.OS === 'ios'
+              ? styles.iosBtn
+              : styles.androidBtn, styles.restartQuizBtn]} onPress={() => this.restartQuiz()}>
+              <Text style={[styles.btnText, styles.restartQuizBtnText]}>Restart Quiz</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )
     }
@@ -47,7 +70,7 @@ class Quiz extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.pagination}>{currentQuestionIndex + 1}/{questions.length}</Text>
-        <View style={[styles.center, styles.quizBody]}>
+        <View style={[styles.center]}>
           <Text style={styles.question}>{card.question}</Text>
           <TouchableOpacity>
             <Text>Answer</Text>
@@ -82,16 +105,14 @@ const styles = StyleSheet.create({
     marginLeft: 15
   },
   center: {
-    flex: 1,
+    flex: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  quizBody:{
-    flex: 8
-  },
   btnContainer: {
     flex:3,
-    alignItems: 'stretch'
+    justifyContent: 'flex-end',
+    alignItems: 'stretch',
   },
   btn: {
     padding: 10,
@@ -114,17 +135,31 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     borderRadius: 2,
   },
+  goBackToDeckBtn:{
+    backgroundColor: white,
+    borderWidth: 1,
+    borderColor: black,
+  },
+  goBackToDeckBtnText:{
+    color:black
+  },
+  restartQuizBtn:{
+    backgroundColor: black,
+  },
+  restartQuizBtnText:{
+    color: white
+  },
   btnText: {
     color: white,
     fontSize: 22,
     textAlign: 'center',
   },
   scoreLbl:{
-    fontSize:24,
+    fontSize: 36,
     color: charcoal
   },
   score:{
-    fontSize: 36,
+    fontSize: 48,
     color: green
   },
   question: {
