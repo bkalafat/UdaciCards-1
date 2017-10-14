@@ -57,10 +57,11 @@ export function clearDB() {
   AsyncStorage.setItem(DECKS_STORAGE_KEY, '')
 }
 
-export function addCardToDeck(deckTitle, {question, answer, isCorrect}) {
-  const results = getDecks()
-  if (results[deckTitle] && results[deckTitle]['questions']) {
-    results[deckTitle]['questions'].push({questions, answer, isCorrect})
-  }
-  AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(results))
+export function addCardToDeck(deckTitle, {question, answer}) {
+  getDecks().then((decks) => {
+    if (decks[deckTitle] && decks[deckTitle]['questions']) {
+      decks[deckTitle]['questions'].push({question, answer})
+    }
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
+  })
 }

@@ -5,11 +5,11 @@ import {charcoal, black, gray} from '../utils/colors'
 
 class Deck extends Component {
 	render () {
-    const { title, questions } = this.props;
+    const { title, questions, bigFonts } = this.props;
 		return (
       <View style={styles.container}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.count}>{questions.length} cards</Text>
+          <Text style={[styles.title, (bigFonts) ? {fontSize:36} : '']}>{title}</Text>
+          <Text style={[styles.count, (bigFonts) ? {fontSize:24} : '']}>{questions.length} cards</Text>
       </View>
 		)
 	}

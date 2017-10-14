@@ -10,16 +10,12 @@ class DeckInfo extends Component {
     return {title: deckTitle}
   }
 
-  startQuiz() {
-
-  }
-
   render() {
     const {deck, navigateToAddCard} = this.props
 
     return (
       <View style={styles.container}>
-        <Deck id={deck.title} title={deck.title} questions={deck.questions}/>
+        <Deck id={deck.title} title={deck.title} questions={deck.questions} bigFonts={true}/>
         <TouchableOpacity style={[styles.btn, Platform.OS === 'ios'
           ? styles.iosBtn
           : styles.androidBtn, styles.addCardBtn]} onPress={() => navigateToAddCard(deck.title)}>
@@ -77,10 +73,11 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps(state, {navigation}) {
+function mapStateToProps(decks, {navigation}) {
   const {deckTitle} = navigation.state.params
   return {
-      deck: state[deckTitle] || {}
+      deck: decks[deckTitle] || {},
+      decks
   }
 }
 

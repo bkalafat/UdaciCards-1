@@ -45,6 +45,7 @@ class Decks extends Component {
 
     return (
       <FlatList
+        style={styles.container}
         data={listOfDecks}
         extraData={this.state}
         keyExtractor={this._keyExtractor}
@@ -54,11 +55,13 @@ class Decks extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: white,
+    padding: 15
+  },
   item: {
     backgroundColor: white,
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',

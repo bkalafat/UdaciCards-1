@@ -27,6 +27,7 @@ function decks(state = {}, action) {
         const {question, answer} = action.card
         out[action.deckTitle].questions.push({question, answer})
       }
+      console.log("ADD_CARD ", out)
       return out
       break;
     default:

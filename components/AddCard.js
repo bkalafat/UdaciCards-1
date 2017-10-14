@@ -7,18 +7,27 @@ import { black, white, lightGray } from '../utils/colors'
 import FormButtons from './FormButtons'
 import {NavigationActions} from 'react-navigation'
 
+import { addCardToDeck } from '../utils/api'
+import { addCard } from '../actions'
+
 class AddCard extends Component {
 
   submit = () => {
-
+    const {question, answer} = this.state
+    const {addCard, deck, goBack} = this.props
+    if(question && answer) {
+      addCard(deck.title, {question, answer}) //update Redux
+      addCardToDeck(deck.title, {question, answer}) //update db
+      goBack()
+    }
   }
 
   reset = () => {
-
-  }
-
-  goBack() {
-
+    this.setState({
+      question: '',
+      answer:''
+    })
+    this.props.goBack()
   }
 
   render() {
@@ -87,4 +96,14 @@ function mapStateToProps(decks, {navigation}) {
       deck: decks[deckTitle] || {}
   }
 }
-export default connect(mapStateToProps)(AddCard)
+
+function mapDispatchToProps(dispatch, {navigation}) {
+  const {deckTitle} = navigation.state.params
+
+  return {
+    goBack: () => navigation.goBack(),
+    addCard:(deckTitle, card) => dispatch(addCard(deckTitle, card))
+  }
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard)
