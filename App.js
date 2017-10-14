@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Entypo } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
@@ -13,8 +13,10 @@ import {clearDB} from './utils/api'
 import Decks from './components/Decks'
 import Deck from './components/Deck'
 import AddDeck from './components/AddDeck'
+import DeckInfo from './components/DeckInfo'
+import AddCard from './components/AddCard'
 
-import {charcoal, white} from './utils/colors'
+import {charcoal, white, black} from './utils/colors'
 
 function FlashCardsStatusBar({ backgroundColor, ...props }){
   return (
@@ -59,6 +61,31 @@ const Tabs = TabNavigator({
   }
 })
 
+
+const MainNavigator = StackNavigator({
+  Home:{
+    screen: Tabs
+  },
+  DeckInfo:{
+    screen: DeckInfo,
+    navigationOptions:{
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: black
+      }
+    }
+  },
+  AddCard:{
+    screen: AddCard,
+    navigationOptions:{
+      headerTintColor: white,
+      headerStyle:{
+        backgroundColor: black
+      }
+    }
+  }
+})
+
 export default class App extends React.Component {
   componentDidMount() {
     //clearDB()
@@ -68,7 +95,7 @@ export default class App extends React.Component {
       <Provider store={createStore(reducer)}>
         <View style={{flex:1}}>
           <FlashCardsStatusBar backgroundColor={charcoal} barStyle='light-content' />
-          <Tabs />
+          <MainNavigator />
         </View>
       </Provider>
     );

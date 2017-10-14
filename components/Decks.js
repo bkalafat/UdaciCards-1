@@ -22,12 +22,15 @@ class Decks extends Component {
 
   _onPressItem = (item) => {
     console.log("Item Pressed!", item)
+    this.props.navigation.navigate('DeckInfo', {
+          deckTitle: item.title
+    })
   };
 
   _renderItem = ({item}) => {
     return (
       <TouchableOpacity style={styles.item} onPress={() => this._onPressItem(item)}>
-        <Deck id={item.title} title={item.title} questions={item.questions} onPressItem={this._onPressItem}/>
+        <Deck id={item.title} title={item.title} questions={item.questions}/>
       </TouchableOpacity>
     )
   }
