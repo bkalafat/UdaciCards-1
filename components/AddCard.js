@@ -39,8 +39,8 @@ class AddCard extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{deck.title}</Text>
-        <TextInput style={styles.question} editable={true} maxLength={100} placeholder="Enter the question here" onChangeText={(question) => this.setState({question})}/>
-        <TextInput style={styles.answer} editable={true} maxLength={200} multiline={true} placeholder="Enter the answer here" onChangeText={(answer) => this.setState({answer})}/>
+        <TextInput style={styles.question} underlineColorAndroid={'transparent'} editable={true} maxLength={100} placeholder="Enter the question here" onChangeText={(question) => this.setState({question})}/>
+        <TextInput style={styles.answer} underlineColorAndroid={'transparent'} editable={true} maxLength={200} multiline={true} placeholder="Enter the answer here" onChangeText={(answer) => this.setState({answer})}/>
         <FormButtons onSubmit={this.submit} onCancel={this.reset} submitBtnText={'Add Card'}/>
       </View>
     )

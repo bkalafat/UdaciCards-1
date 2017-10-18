@@ -45,7 +45,7 @@ class AddDeck extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.deckLabel}>What is the title of your new deck?</Text>
-        <TextInput style={styles.deckTitle} editable={true} maxLength={50} placeholder="Deck Title" onChangeText={(title) => this.setState({title})}/>
+        <TextInput underlineColorAndroid={'transparent'} style={styles.deckTitle} editable={true} maxLength={50} placeholder="Deck Title" onChangeText={(title) => this.setState({title})}/>
         <FormButtons onSubmit={this.submit} onCancel={this.reset} submitBtnText={'Add Deck'} cancelBtnText={'Go Back'}/>
       </View>
     )
