@@ -1,9 +1,9 @@
 # UdaciCards
 This project is developed for Udacity React Nanodegree (React Native) project submission.
 
-The basic idea of the project is to create bunch of decks each with few cards. Each card will contain question and answer. the users can later come back and test themself and evaluate themselves by checking if the answer is right.
+The basic idea of the project is to create bunch of decks each with few cards. Each card will contain question and answer. the users can later come back and test themselves and evaluate themselves by checking if the answer is right.
 
-This project was bootstrapped with from [Create React App](https://github.com/facebookincubator/create-react-app).
+This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 ## How To Install And Run The App
 
@@ -35,4 +35,3 @@ This project is developed for Udacity React Nanodegree (React Native) project su
 The basic idea of the project is to create bunch of decks each with few cards. Each card will contain question and answer. the users can later come back and test themself and evaluate themselves by checking if the answer is right.
 
 ## How to start
-
