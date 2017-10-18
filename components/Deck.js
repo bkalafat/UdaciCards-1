@@ -2,17 +2,29 @@ import React, {Component} from 'react'
 import {View, Text, StyleSheet, Platform} from 'react-native'
 import {charcoal, black, gray} from '../utils/colors'
 
-
 class Deck extends Component {
-	render () {
-    const { title, questions, bigFonts } = this.props;
-		return (
+  render() {
+    const {title, questions, bigFonts} = this.props;
+    return (
       <View style={styles.container}>
-          <Text style={[styles.title, (bigFonts) ? {fontSize:36} : '']}>{title}</Text>
-          <Text style={[styles.count, (bigFonts) ? {fontSize:24} : '']}>{questions.length} cards</Text>
+        <Text style={[
+          styles.title, (bigFonts)
+            ? {
+              fontSize: 36
+            }
+            : ''
+        ]}>{title}</Text>
+        <Text style={[
+          styles.count, (bigFonts)
+            ? {
+              fontSize: 24
+            }
+            : ''
+        ]}>{questions.length}
+          cards</Text>
       </View>
-		)
-	}
+    )
+  }
 }
 
 export default Deck;

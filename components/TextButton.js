@@ -1,10 +1,15 @@
-import React from 'react'
+import React, {PureComponent} from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-export default function TextButton ({ children, onPress, style = {} }) {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Text style={style}>{children}</Text>
-    </TouchableOpacity>
-  )
+class TextButton extends PureComponent {
+  render() {
+    const { children, onPress, style = {} } = this.props
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <Text style={style}>{children}</Text>
+      </TouchableOpacity>
+    )
+  }
 }
+
+export default TextButton

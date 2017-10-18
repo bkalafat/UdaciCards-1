@@ -16,14 +16,10 @@ class DeckInfo extends Component {
     return (
       <View style={styles.container}>
         <Deck id={deck.title} title={deck.title} questions={deck.questions} bigFonts={true}/>
-        <TouchableOpacity style={[styles.btn, Platform.OS === 'ios'
-          ? styles.iosBtn
-          : styles.androidBtn, styles.addCardBtn]} onPress={() => navigateToAddCard(deck.title)}>
+        <TouchableOpacity style={[styles.btn, styles.addCardBtn]} onPress={() => navigateToAddCard(deck.title)}>
           <Text style={[styles.btnText, styles.addCardBtnText]}>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.btn, Platform.OS === 'ios'
-          ? styles.iosBtn
-          : styles.androidBtn, styles.startQuizBtn]} onPress={() => navigateToStartQuiz(deck.title)}>
+        <TouchableOpacity style={[styles.btn, styles.startQuizBtn]} onPress={() => navigateToStartQuiz(deck.title)}>
           <Text style={[styles.btnText, styles.startQuizBtnText]}>Start Quiz</Text>
         </TouchableOpacity>
       </View>
@@ -40,44 +36,45 @@ const styles = StyleSheet.create({
   btn: {
     padding: 10,
     height: 45,
-    margin:10,
+    margin: 10,
     justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        borderRadius: 7
+      },
+      android: {
+        paddingLeft: 30,
+        paddingRight: 30,
+        borderRadius: 2
+      }
+    })
   },
-  addCardBtn:{
+  addCardBtn: {
     backgroundColor: white,
     borderWidth: 1,
-    borderColor: black,
+    borderColor: black
   },
-  addCardBtnText:{
-    color:black
+  addCardBtnText: {
+    color: black
   },
-  startQuizBtn:{
-    backgroundColor: black,
+  startQuizBtn: {
+    backgroundColor: black
   },
-  startQuizBtnText:{
+  startQuizBtnText: {
     color: white
-  },
-  iosBtn:{
-    borderRadius: 7,
-    height: 45,
-  },
-  androidBtn:{
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderRadius: 2,
   },
   btnText: {
     color: white,
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: 'center'
   }
 })
 
 function mapStateToProps(decks, {navigation}) {
   const {deckTitle} = navigation.state.params
   return {
-      deck: decks[deckTitle] || {},
-      decks
+    deck: decks[deckTitle] || {},
+    decks
   }
 }
 
@@ -86,12 +83,8 @@ function mapDispatchToProps(dispatch, {navigation}) {
 
   return {
     goBack: () => navigation.goBack(),
-    navigateToAddCard: (deckTitle) => navigation.navigate('AddCard', {
-          deckTitle: deckTitle
-    }),
-    navigateToStartQuiz: (deckTitle) => navigation.navigate('Quiz', {
-          deckTitle: deckTitle
-    })
+    navigateToAddCard: (deckTitle) => navigation.navigate('AddCard', {deckTitle: deckTitle}),
+    navigateToStartQuiz: (deckTitle) => navigation.navigate('Quiz', {deckTitle: deckTitle})
   }
 
 }

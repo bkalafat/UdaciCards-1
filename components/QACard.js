@@ -5,16 +5,11 @@ import TextButton from './TextButton'
 
 class QACard extends Component {
 
-  constructor(props) {
-    super(props);
-    this.flipCard = this.flipCard.bind(this);
-  }
-
   state = {
     flipToShow: 'Answer'
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     const {card} = this.props
     if (card.question !== nextProps.card.question) {
       this.reset()
@@ -51,7 +46,7 @@ class QACard extends Component {
     }
   }
 
-  flipCard() {
+  flipCard = () => {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
         toValue: 0,
@@ -114,16 +109,16 @@ const styles = StyleSheet.create({
   },
   flipCard: {
     minHeight: 400,
-    marginLeft:10,
+    marginLeft: 10,
     marginRight: 10,
     backfaceVisibility: 'hidden',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   flipCardBack: {
     position: "absolute",
     top: 0,
-    left:10
+    left: 10
   },
   content: {
     color: black,

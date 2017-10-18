@@ -1,21 +1,28 @@
 import React, {Component} from 'react'
-import {Text, TextInput, View, TouchableOpacity, Platform, StyleSheet} from 'react-native'
+import {
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Platform,
+  StyleSheet
+} from 'react-native'
 
 import {connect} from 'react-redux'
-import { black, white, lightGray } from '../utils/colors'
+import {black, white, lightGray} from '../utils/colors'
 
 import FormButtons from './FormButtons'
 import {NavigationActions} from 'react-navigation'
 
-import { addCardToDeck } from '../utils/api'
-import { addCard } from '../actions'
+import {addCardToDeck} from '../utils/api'
+import {addCard} from '../actions'
 
 class AddCard extends Component {
 
   submit = () => {
     const {question, answer} = this.state
     const {addCard, deck, goBack} = this.props
-    if(question && answer) {
+    if (question && answer) {
       addCard(deck.title, {question, answer}) //update Redux
       addCardToDeck(deck.title, {question, answer}) //update db
       goBack()
@@ -23,10 +30,7 @@ class AddCard extends Component {
   }
 
   reset = () => {
-    this.setState({
-      question: '',
-      answer:''
-    })
+    this.setState({question: '', answer: ''})
     this.props.goBack()
   }
 
@@ -35,22 +39,9 @@ class AddCard extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{deck.title}</Text>
-        <TextInput
-          style={styles.question}
-          editable={true}
-          maxLength={100}
-          placeholder="Enter the question here"
-          onChangeText={(question) => this.setState({question})}
-        />
-        <TextInput
-          style={styles.answer}
-          editable = {true}
-          maxLength = {200}
-          multiline = {true}
-          placeholder="Enter the answer here"
-          onChangeText={(answer) => this.setState({answer})}
-        />
-        <FormButtons onSubmit={this.submit} onCancel={this.reset} submitBtnText={'Add Card'} />
+        <TextInput style={styles.question} editable={true} maxLength={100} placeholder="Enter the question here" onChangeText={(question) => this.setState({question})}/>
+        <TextInput style={styles.answer} editable={true} maxLength={200} multiline={true} placeholder="Enter the answer here" onChangeText={(answer) => this.setState({answer})}/>
+        <FormButtons onSubmit={this.submit} onCancel={this.reset} submitBtnText={'Add Card'}/>
       </View>
     )
   }
@@ -68,21 +59,21 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   question: {
-    marginTop:10,
-    marginBottom:10,
-    padding:10,
-    paddingTop:5,
-    paddingBottom:5,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     borderWidth: 1,
     borderColor: lightGray,
     borderRadius: 4
   },
   answer: {
-    marginTop:10,
-    marginBottom:10,
-    padding:10,
-    paddingTop:5,
-    paddingBottom:5,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: lightGray,
@@ -93,7 +84,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(decks, {navigation}) {
   const {deckTitle} = navigation.state.params
   return {
-      deck: decks[deckTitle] || {}
+    deck: decks[deckTitle] || {}
   }
 }
 
@@ -102,7 +93,7 @@ function mapDispatchToProps(dispatch, {navigation}) {
 
   return {
     goBack: () => navigation.goBack(),
-    addCard:(deckTitle, card) => dispatch(addCard(deckTitle, card))
+    addCard: (deckTitle, card) => dispatch(addCard(deckTitle, card))
   }
 
 }

@@ -1,11 +1,18 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, Platform, FlatList, TouchableOpacity} from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  FlatList,
+  TouchableOpacity
+} from 'react-native'
 import {connect} from 'react-redux'
 import {getDecks} from '../utils/api'
 import {loadDecks} from '../actions'
 import Deck from './Deck'
 import {AppLoading} from 'expo'
-import {white,halfGray} from '../utils/colors'
+import {white, halfGray} from '../utils/colors'
 
 class Decks extends Component {
 
@@ -18,18 +25,15 @@ class Decks extends Component {
     getDecks().then((decks) => loadDecks(decks)).then(() => this.setState(() => ({ready: true})))
   }
 
-  _keyExtractor = (item, index) => item.title;
+  keyExtractor = (item, index) => item.title;
 
-  _onPressItem = (item) => {
-    console.log("Item Pressed!", item)
-    this.props.navigation.navigate('DeckInfo', {
-          deckTitle: item.title
-    })
+  onPressItem = (item) => {
+    this.props.navigation.navigate('DeckInfo', {deckTitle: item.title})
   };
 
-  _renderItem = ({item}) => {
+  renderItem = ({item}) => {
     return (
-      <TouchableOpacity style={styles.item} onPress={() => this._onPressItem(item)}>
+      <TouchableOpacity style={styles.item} onPress={() => this.onPressItem(item)}>
         <Deck id={item.title} title={item.title} questions={item.questions}/>
       </TouchableOpacity>
     )
@@ -43,14 +47,7 @@ class Decks extends Component {
       return (<AppLoading/>)
     }
 
-    return (
-      <FlatList
-        style={styles.container}
-        data={listOfDecks}
-        extraData={this.state}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
-      />)
+    return (<FlatList style={styles.container} data={listOfDecks} extraData={this.state} keyExtractor={this.keyExtractor} renderItem={this.renderItem}/>)
   }
 }
 

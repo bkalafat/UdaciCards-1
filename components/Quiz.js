@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {
   View,
   Text,
@@ -8,19 +8,19 @@ import {
   Animated
 } from 'react-native'
 import {connect} from 'react-redux'
-import { setLocalNotification, clearLocalNotification} from '../utils/notifications'
+import {setLocalNotification, clearLocalNotification} from '../utils/notifications'
 import {white, black, green, red, charcoal} from '../utils/colors'
 import Deck from './Deck'
 import QACard from './QACard'
 
-class Quiz extends Component {
+class Quiz extends PureComponent {
 
   state = {
     currentQuestionIndex: 0,
     correctAnswersCount: 0
   }
 
-  componentDidMount(){
+  componentDidMount() {
     clearLocalNotification().then(setLocalNotification)
   }
 
@@ -61,20 +61,10 @@ class Quiz extends Component {
           </View>
 
           <View style={styles.btnContainer}>
-            <TouchableOpacity style={[
-              styles.btn, Platform.OS === 'ios'
-                ? styles.iosBtn
-                : styles.androidBtn,
-              styles.goBackToDeckBtn
-            ]} onPress={() => goBack()}>
+            <TouchableOpacity style={[styles.btn, styles.goBackToDeckBtn]} onPress={() => goBack()}>
               <Text style={[styles.btnText, styles.goBackToDeckBtnText]}>Back to Deck</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[
-              styles.btn, Platform.OS === 'ios'
-                ? styles.iosBtn
-                : styles.androidBtn,
-              styles.restartQuizBtn
-            ]} onPress={() => this.restartQuiz()}>
+            <TouchableOpacity style={[styles.btn, styles.restartQuizBtn]} onPress={() => this.restartQuiz()}>
               <Text style={[styles.btnText, styles.restartQuizBtnText]}>Restart Quiz</Text>
             </TouchableOpacity>
           </View>
@@ -101,22 +91,12 @@ class Quiz extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.pagination}>{currentQuestionIndex + 1}/{questions.length}</Text>
-        <View style={styles.qacard}><QACard card={card} /></View>
+        <View style={styles.qacard}><QACard card={card}/></View>
         <View style={styles.btnContainer}>
-          <TouchableOpacity style={[
-            styles.btn, Platform.OS === 'ios'
-              ? styles.iosBtn
-              : styles.androidBtn,
-            styles.greenBtn
-          ]} onPress={() => this.correctBtnPressed()}>
+          <TouchableOpacity style={[styles.btn, styles.greenBtn]} onPress={() => this.correctBtnPressed()}>
             <Text style={[styles.btnText]}>Correct</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[
-            styles.btn, Platform.OS === 'ios'
-              ? styles.iosBtn
-              : styles.androidBtn,
-            styles.redBtn
-          ]} onPress={() => this.inCorrectBtnPressed()}>
+          <TouchableOpacity style={[styles.btn, styles.redBtn]} onPress={() => this.inCorrectBtnPressed()}>
             <Text style={[styles.btnText]}>Incorrect</Text>
           </TouchableOpacity>
         </View>
@@ -135,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start'
   },
-  qacard:{
+  qacard: {
     flex: 9,
     justifyContent: 'center',
     alignItems: 'center'
@@ -149,22 +129,23 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 45,
     margin: 10,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        borderRadius: 7
+      },
+      android: {
+        paddingLeft: 30,
+        paddingRight: 30,
+        borderRadius: 2
+      }
+    })
   },
   greenBtn: {
     backgroundColor: green
   },
   redBtn: {
     backgroundColor: red
-  },
-  iosBtn: {
-    borderRadius: 7,
-    height: 45
-  },
-  androidBtn: {
-    paddingLeft: 30,
-    paddingRight: 30,
-    borderRadius: 2
   },
   goBackToDeckBtn: {
     backgroundColor: white,
@@ -186,7 +167,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   scoreContainer: {
-    flex:7,
+    flex: 7,
     justifyContent: 'center',
     alignItems: 'center'
   },
