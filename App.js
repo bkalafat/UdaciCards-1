@@ -9,6 +9,7 @@ import { Entypo } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
 import {clearDB} from './utils/api'
+import { setLocalNotification } from './utils/notifications'
 
 import Decks from './components/Decks'
 import Deck from './components/Deck'
@@ -104,6 +105,7 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
   componentDidMount() {
     //clearDB()
+    setLocalNotification()
   }
   render() {
     return (

@@ -8,6 +8,7 @@ import {
   Animated
 } from 'react-native'
 import {connect} from 'react-redux'
+import { setLocalNotification, clearLocalNotification} from '../utils/notifications'
 import {white, black, green, red, charcoal} from '../utils/colors'
 import Deck from './Deck'
 import QACard from './QACard'
@@ -17,6 +18,10 @@ class Quiz extends Component {
   state = {
     currentQuestionIndex: 0,
     correctAnswersCount: 0
+  }
+
+  componentDidMount(){
+    clearLocalNotification().then(setLocalNotification)
   }
 
   correctBtnPressed() {
