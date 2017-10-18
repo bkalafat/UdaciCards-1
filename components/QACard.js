@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, Platform, Animated} from 'react-native'
-import {red, black} from '../utils/colors'
+import {red, black, blue} from '../utils/colors'
 import TextButton from './TextButton'
 
 class QACard extends Component {
@@ -22,6 +22,19 @@ class QACard extends Component {
     this.animatedValue.addListener(({value}) => {
       this.value = value;
     })
+
+    this.animatedOpacityFrontValue = new Animated.Value(1);
+    this.textOpacityFrontValue = 1;
+    this.animatedOpacityFrontValue.addListener(({value}) => {
+      this.textOpacityFrontValue = value;
+    })
+
+    this.animatedOpacityBackValue = new Animated.Value(0);
+    this.textOpacityBackValue = 0;
+    this.animatedOpacityBackValue.addListener(({value}) => {
+      this.textOpacityBackValue = value;
+    })
+
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [
         0, 180
@@ -38,28 +51,58 @@ class QACard extends Component {
 
   reset() {
     if (this.value >= 90) {
-      Animated.timing(this.animatedValue, {
-        toValue: 0,
-        duration: 0
-      }).start();
+      Animated.parallel([
+        Animated.timing(this.animatedValue, {
+          toValue: 0,
+          duration: 0
+        }),
+        Animated.timing(this.animatedOpacityFrontValue, {
+          toValue: 1,
+          duration: 0,
+        }),
+        Animated.timing(this.animatedOpacityBackValue, {
+          toValue: 0,
+          duration: 0,
+        })
+      ]).start()
       this.setState({flipToShow: 'Answer'})
     }
   }
 
   flipCard = () => {
     if (this.value >= 90) {
-      Animated.spring(this.animatedValue, {
-        toValue: 0,
-        friction: 8,
-        tension: 10
-      }).start();
+      Animated.parallel([
+        Animated.spring(this.animatedValue, {
+          toValue: 0,
+          friction: 8,
+          tension: 10
+        }),
+        Animated.timing(this.animatedOpacityFrontValue, {
+          toValue: 1,
+          duration: 100,
+        }),
+        Animated.timing(this.animatedOpacityBackValue, {
+          toValue: 0,
+          duration: 0,
+        })
+      ]).start()
       this.setState({flipToShow: 'Answer'})
     } else {
-      Animated.spring(this.animatedValue, {
-        toValue: 180,
-        friction: 8,
-        tension: 10
-      }).start();
+      Animated.parallel([
+        Animated.spring(this.animatedValue, {
+          toValue: 180,
+          friction: 8,
+          tension: 10
+        }),
+        Animated.timing(this.animatedOpacityBackValue, {
+          toValue: 1,
+          duration: 100,
+        }),
+        Animated.timing(this.animatedOpacityFrontValue, {
+          toValue: 0,
+          duration: 0,
+        })
+      ]).start()
       this.setState({flipToShow: 'Question'})
     }
   }
@@ -73,14 +116,16 @@ class QACard extends Component {
         {
           rotateY: this.frontInterpolate
         }
-      ]
+      ],
+      opacity: this.animatedOpacityFrontValue
     }
     const backAnimatedStyle = {
       transform: [
         {
           rotateY: this.backInterpolate
         }
-      ]
+      ],
+      opacity: this.animatedOpacityBackValue
     }
 
     return (
@@ -93,7 +138,7 @@ class QACard extends Component {
             <Text style={styles.content}>{card.answer}</Text>
           </Animated.View>
         </View>
-        <TextButton onPress={() => this.flipCard()}>{flipToShow}</TextButton>
+        <TextButton style={{color: blue}} onPress={() => this.flipCard()}>{flipToShow}</TextButton>
       </View>
     )
   }
@@ -108,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   flipCard: {
-    minHeight: 400,
+    height: 250,
     marginLeft: 10,
     marginRight: 10,
     backfaceVisibility: 'hidden',
@@ -118,7 +163,8 @@ const styles = StyleSheet.create({
   flipCardBack: {
     position: "absolute",
     top: 0,
-    left: 10
+    left: 10,
+    right:5
   },
   content: {
     color: black,
